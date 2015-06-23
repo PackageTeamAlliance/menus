@@ -17,11 +17,7 @@
     }
   ],
   "require": {
-<<<<<<< HEAD
     "php": ">=5.5.0",
-=======
-    "php": ">=5.5.*",
->>>>>>> 4d0e5208e57000f97388ffdcd77c196eededbe7f
     "illuminate/support": "5.1.*@dev",
     "illuminate/config": "5.1.*@dev",
     "illuminate/view": "5.1.*@dev",
