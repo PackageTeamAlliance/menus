@@ -1,6 +1,6 @@
 <?php
 
-namespace Pingpong\Menus;
+namespace Pta\Menus;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -83,7 +83,7 @@ class MenusServiceProvider extends ServiceProvider
         ], 'config');
 
         $this->publishes([
-            __DIR__.'/src/views' => base_path('resources/views/vendor/pingpong/menus'),
+            __DIR__.'/src/views' => base_path('resources/views/vendor/pta/menus'),
         ], 'views');
     }
 }

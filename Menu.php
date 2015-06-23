@@ -1,6 +1,6 @@
 <?php
 
-namespace Pingpong\Menus;
+namespace Pta\Menus;
 
 use Closure;
 use Countable;
@@ -33,7 +33,7 @@ class Menu implements Countable
      *
      * @param string $name
      *
-     * @return \Pingpong\Menus\MenuBuilder
+     * @return \Pta\Menus\MenuBuilder
      */
     public function make($name)
     {
@@ -52,7 +52,7 @@ class Menu implements Countable
      * @param string   $name
      * @param Callable $resolver
      *
-     * @return \Pingpong\Menus\MenuBuilder
+     * @return \Pta\Menus\MenuBuilder
      */
     public function create($name, Closure $resolver)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pingpong\Menus;
+namespace Pta\Menus;
 
 use Illuminate\Support\Facades\Facade;
 

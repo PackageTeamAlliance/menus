@@ -1,8 +1,8 @@
 <?php
 
-namespace Pingpong\Menus\Presenters;
+namespace PTa\Menus\Presenters;
 
-use Pingpong\Menus\MenuItem;
+use Pta\Menus\MenuItem;
 
 abstract class Presenter implements PresenterInterface
 {

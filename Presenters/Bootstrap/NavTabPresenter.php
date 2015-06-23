@@ -1,6 +1,6 @@
 <?php
 
-namespace Pingpong\Menus\Presenters\Bootstrap;
+namespace Pta\Menus\Presenters\Bootstrap;
 
 class NavTabPresenter extends NavbarPresenter
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pingpong\Menus;
+namespace Pta\Menus;
 
 use Illuminate\Contracts\Support\Arrayable as ArrayableContract;
 use Collective\Html\HtmlFacade as HTML;
@@ -37,6 +37,7 @@ class MenuItem implements ArrayableContract
         'attributes',
         'active',
         'order',
+        'roles',
     );
 
     /**

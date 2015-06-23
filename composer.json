@@ -1,10 +1,10 @@
 {
-  "name": "pingpong/menus",
-  "description": "Laravel Menus",
+  "name": "pta/menus",
+  "description": "Laravel 5.1 Menus",
   "keywords": [
     "laravel",
     "menus",
-    "pingpong",
+    "pta",
     "navigation",
     "nav",
     "bootstrap"
@@ -12,12 +12,12 @@
   "license": "BSD-3-Clause",
   "authors": [
     {
-      "name": "Pingpong Labs",
-      "email": "pingpong.labs@gmail.com"
+      "name": "Package Team Alliance",
+      "email": "dr.parham@gmail.com"
     }
   ],
   "require": {
-    "php": ">=5.3.0",
+    "php": ">=5.9.0",
     "illuminate/support": "5.1.*@dev",
     "illuminate/config": "5.1.*@dev",
     "illuminate/view": "5.1.*@dev",
@@ -29,7 +29,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Pingpong\\Menus\\": ""
+      "Pta\\Menus\\": ""
     }
   },
   "minimum-stability": "stable"

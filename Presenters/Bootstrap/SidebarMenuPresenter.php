@@ -1,8 +1,8 @@
 <?php
 
-namespace Pingpong\Menus\Presenters\Bootstrap;
+namespace Pta\Menus\Presenters\Bootstrap;
 
-use Pingpong\Menus\Presenters\Presenter;
+use Pta\Menus\Presenters\Presenter;
 
 class SidebarMenuPresenter extends Presenter
 {

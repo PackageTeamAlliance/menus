@@ -1,10 +1,11 @@
 <?php
 
-namespace Pingpong\Menus;
+namespace Pta\Menus;
 
 use Countable;
 use Illuminate\Config\Repository;
 use Illuminate\View\Factory as ViewFactory;
+use Illuminate\Http\Request;
 
 class MenuBuilder implements Countable
 {
@@ -22,12 +23,13 @@ class MenuBuilder implements Countable
      */
     protected $items = array();
 
+
     /**
      * Default presenter class.
      *
      * @var string
      */
-    protected $presenter = 'Pingpong\Menus\Presenters\Bootstrap\NavbarPresenter';
+    protected $presenter = 'Pta\Menus\Presenters\Bootstrap\NavbarPresenter';
 
     /**
      * Style name for each presenter.
@@ -69,10 +71,11 @@ class MenuBuilder implements Countable
      *
      * @param string $menu
      */
-    public function __construct($menu, Repository $config)
+    public function __construct($menu, Repository $config, Request $request)
     {
         $this->menu = $menu;
         $this->config = $config;
+        $this->request = $request;
     }
 
     /**
@@ -98,7 +101,7 @@ class MenuBuilder implements Countable
      *
      * @param  string $key
      * @param  string $value
-     * @return \Pingpong\Menus\MenuItem
+     * @return \Pta\Menus\MenuItem
      */
     public function findBy($key, $value)
     {
@@ -172,7 +175,7 @@ class MenuBuilder implements Countable
     /**
      * Get presenter instance.
      *
-     * @return \Pingpong\Menus\Presenters\PresenterInterface
+     * @return \Pta\Menus\Presenters\PresenterInterface
      */
     public function getPresenter()
     {
@@ -246,7 +249,7 @@ class MenuBuilder implements Countable
      *
      * @param array $attributes
      *
-     * @return \Pingpong\Menus\MenuItem
+     * @return \Pta\Menus\MenuItem
      */
     public function add(array $attributes = array())
     {
@@ -338,7 +341,7 @@ class MenuBuilder implements Countable
      * Add new divider item.
      *
      * @param int $order
-     * @return \Pingpong\Menus\MenuItem
+     * @return \Pta\Menus\MenuItem
      */
     public function addDivider($order = null)
     {
@@ -350,7 +353,7 @@ class MenuBuilder implements Countable
     /**
      * Add new header item.
      *
-     * @return \Pingpong\Menus\MenuItem
+     * @return \Pta\Menus\MenuItem
      */
     public function addHeader($title, $order = null)
     {
@@ -522,15 +525,27 @@ class MenuBuilder implements Countable
         $menu = $presenter->getOpenTagWrapper();
 
         foreach ($this->getOrderedItems() as $item) {
-            if ($item->hasSubMenu()) {
-                $menu .= $presenter->getMenuWithDropDownWrapper($item);
-            } elseif ($item->isHeader()) {
-                $menu .= $presenter->getHeaderWrapper($item);
-            } elseif ($item->isDivider()) {
-                $menu .= $presenter->getDividerWrapper();
-            } else {
-                $menu .= $presenter->getMenuWithoutDropdownWrapper($item);
+            $hasRule = false;
+            foreach($item->roles as $role){
+                if(in_array($role, $this->request->session()->get('roles'))){
+                    $hasRole = true;
+                    break;
+                }
             }
+            if ($hasRole){
+                if ($item->hasSubMenu()) {
+                    $menu .= $presenter->getMenuWithDropDownWrapper($item);
+                } elseif ($item->isHeader()) {
+                    $menu .= $presenter->getHeaderWrapper($item);
+                } elseif ($item->isDivider()) {
+                    $menu .= $presenter->getDividerWrapper();
+                } else {
+                    $menu .= $presenter->getMenuWithoutDropdownWrapper($item);
+                }
+            }else {
+                continue;
+            }
+
         }
 
         $menu .= $presenter->getCloseTagWrapper();

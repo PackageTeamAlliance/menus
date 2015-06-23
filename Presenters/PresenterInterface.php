@@ -1,8 +1,8 @@
 <?php
 
-namespace Pingpong\Menus\Presenters;
+namespace Pta\Menus\Presenters;
 
-use Pingpong\Menus\MenuItem;
+use Pta\Menus\MenuItem;
 
 interface PresenterInterface
 {
