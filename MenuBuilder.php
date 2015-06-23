@@ -71,11 +71,10 @@ class MenuBuilder implements Countable
      *
      * @param string $menu
      */
-    public function __construct($menu, Repository $config, Request $request)
+    public function __construct($menu, Repository $config)
     {
         $this->menu = $menu;
         $this->config = $config;
-        $this->request = $request;
     }
 
     /**
@@ -525,9 +524,17 @@ class MenuBuilder implements Countable
         $menu = $presenter->getOpenTagWrapper();
 
         foreach ($this->getOrderedItems() as $item) {
-            $hasRule = false;
+            $hasRole = false;
+
+            if(!isset($item->roles)){
+                $item->roles = ['guest'];
+            }
+
+            $roles = \Session::get('roles');
+            $roles[] = 'guest';
+
             foreach($item->roles as $role){
-                if(in_array($role, $this->request->session()->get('roles'))){
+                if(in_array($role, $roles)){
                     $hasRole = true;
                     break;
                 }

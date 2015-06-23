@@ -1,6 +1,6 @@
 <?php
 
-namespace PTa\Menus\Presenters;
+namespace Pta\Menus\Presenters;
 
 use Pta\Menus\MenuItem;
 
@@ -88,14 +88,32 @@ abstract class Presenter implements PresenterInterface
     {
         $results = '';
         foreach ($item->getChilds() as $child) {
-            if ($child->hasSubMenu()) {
-                $results .= $this->getMultiLevelDropdownWrapper($child);
-            } elseif ($child->isHeader()) {
-                $results .= $this->getHeaderWrapper($child);
-            } elseif ($child->isDivider()) {
-                $results .= $this->getDividerWrapper();
-            } else {
-                $results .= $this->getMenuWithoutDropdownWrapper($child);
+            $hasRole = false;
+
+            if(!isset($child->roles)){
+                $child->roles = ['guest'];
+            }
+
+            $roles = \Session::get('roles');
+            $roles[] = 'guest';
+
+            foreach($child->roles as $role){
+                if(in_array($role, $roles)){
+                    $hasRole = true;
+                    break;
+                }
+            }
+
+            if($hasRole){
+                if ($child->hasSubMenu()) {
+                    $results .= $this->getMultiLevelDropdownWrapper($child);
+                } elseif ($child->isHeader()) {
+                    $results .= $this->getHeaderWrapper($child);
+                } elseif ($child->isDivider()) {
+                    $results .= $this->getDividerWrapper();
+                } else {
+                    $results .= $this->getMenuWithoutDropdownWrapper($child);
+                }
             }
         }
 
