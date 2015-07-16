@@ -530,11 +530,11 @@ class MenuBuilder implements Countable
                 $item->roles = ['guest'];
             }
 
-            $roles = \Session::get('roles');
+            $roles = array_change_key_case(\Session::get('roles'), CASE_LOWER);
             $roles[] = 'guest';
 
             foreach($item->roles as $role){
-                if(in_array($role, $roles)){
+                if(in_array(strtolower($role), $roles)){
                     $hasRole = true;
                     break;
                 }
