@@ -529,8 +529,12 @@ class MenuBuilder implements Countable
             if(!isset($item->roles)){
                 $item->roles = ['guest'];
             }
+            $sessionRoles = \Session::get('roles');
+            
+            if(isset($sessionRoles) && is_array($sessionRoles)) {
+                $roles = array_change_key_case(\Session::get('roles'), CASE_LOWER);
+            }
 
-            $roles = array_change_key_case(\Session::get('roles'), CASE_LOWER);
             $roles[] = 'guest';
 
             foreach($item->roles as $role){
