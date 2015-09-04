@@ -529,20 +529,19 @@ class MenuBuilder implements Countable
             if(!isset($item->roles)){
                 $item->roles = ['guest'];
             }
-            $sessionRoles = \Session::get('roles');
-            
-            if(isset($sessionRoles) && is_array($sessionRoles)) {
-                $roles = array_change_key_case(\Session::get('roles'), CASE_LOWER);
-            }
 
-            $roles[] = 'guest';
+            if($item->roles[0] == "guest"){
+                $hasRole = true;
+            }else {
+                foreach($item->roles as $role){
 
-            foreach($item->roles as $role){
-                if(in_array(strtolower($role), $roles)){
-                    $hasRole = true;
-                    break;
+                    if(\Defender::hasRole(strtolower($role))){
+                        $hasRole = true;
+                        break;
+                    }
                 }
             }
+
             if ($hasRole){
                 if ($item->hasSubMenu()) {
                     $menu .= $presenter->getMenuWithDropDownWrapper($item);

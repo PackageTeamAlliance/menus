@@ -94,13 +94,15 @@ abstract class Presenter implements PresenterInterface
                 $child->roles = ['guest'];
             }
 
-            $roles = array_change_key_case(\Session::get('roles'), CASE_LOWER);
-            $roles[] = 'guest';
+            if($item->roles[0] == "guest"){
+                $hasRole = true;
+            }else {
+                foreach($item->roles as $role){
 
-            foreach($child->roles as $role){
-                if(in_array(strtolower($role), $roles)){
-                    $hasRole = true;
-                    break;
+                    if(\Defender::hasRole(strtolower($role))){
+                        $hasRole = true;
+                        break;
+                    }
                 }
             }
 
