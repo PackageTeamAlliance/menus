@@ -7,6 +7,7 @@ use Illuminate\Config\Repository;
 use Illuminate\View\Factory as ViewFactory;
 use Illuminate\Http\Request;
 
+
 class MenuBuilder implements Countable
 {
     /**
@@ -75,6 +76,9 @@ class MenuBuilder implements Countable
     {
         $this->menu = $menu;
         $this->config = $config;
+        $this->userRepo = app()->make('Pta\CoreUsers\Repositories\UserRepository');
+
+
     }
 
     /**
@@ -535,7 +539,7 @@ class MenuBuilder implements Countable
             }else {
                 foreach($item->roles as $role){
 
-                    if(\Defender::hasRole(strtolower($role))){
+                    if($this->checkRole(strtolower($role))){
                         $hasRole = true;
                         break;
                     }
@@ -561,5 +565,23 @@ class MenuBuilder implements Countable
         $menu .= $presenter->getCloseTagWrapper();
 
         return $menu;
+    }
+
+    protected function checkRole($role)
+    {
+        if(in_array($role,$this->cleanRoles())){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    private function cleanRoles()
+    {
+        $roles = $this->userRepo->getRoles();
+        $cleanRoles = [];
+        foreach($roles as $key => $value){
+            array_push($cleanRoles, $value->name);
+        }
+        return $cleanRoles;
     }
 }

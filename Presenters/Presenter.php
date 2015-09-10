@@ -86,6 +86,8 @@ abstract class Presenter implements PresenterInterface
      */
     public function getChildMenuItems(MenuItem $item)
     {
+        $this->userRepo = app()->make('Pta\CoreUsers\Repositories\UserRepository');
+
         $results = '';
         foreach ($item->getChilds() as $child) {
             $hasRole = false;
@@ -99,7 +101,7 @@ abstract class Presenter implements PresenterInterface
             }else {
                 foreach($item->roles as $role){
 
-                    if(\Defender::hasRole(strtolower($role))){
+                    if($this->checkRole(strtolower($role))){
                         $hasRole = true;
                         break;
                     }
@@ -120,5 +122,23 @@ abstract class Presenter implements PresenterInterface
         }
 
         return $results;
+    }
+
+    protected function checkRole($role)
+    {
+        if(in_array($role,$this->cleanRoles())){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    private function cleanRoles()
+    {
+        $roles = $this->userRepo->getRoles();
+        $cleanRoles = [];
+        foreach($roles as $key => $value){
+            array_push($cleanRoles, $value->name);
+        }
+        return $cleanRoles;
     }
 }
