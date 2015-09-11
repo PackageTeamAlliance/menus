@@ -76,7 +76,7 @@ class MenuBuilder implements Countable
     {
         $this->menu = $menu;
         $this->config = $config;
-        $this->userRepo = app()->make('Pta\CoreUsers\Repositories\UserRepository');
+        $this->userRepo = app()->make('Pta\Guardian\Repositories\UserRepository');
 
 
     }

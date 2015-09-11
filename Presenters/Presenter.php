@@ -86,7 +86,7 @@ abstract class Presenter implements PresenterInterface
      */
     public function getChildMenuItems(MenuItem $item)
     {
-        $this->userRepo = app()->make('Pta\CoreUsers\Repositories\UserRepository');
+        $this->userRepo = app()->make('Pta\Guardian\Repositories\UserRepository');
 
         $results = '';
         foreach ($item->getChilds() as $child) {
