@@ -539,7 +539,7 @@ class MenuBuilder implements Countable
             }else {
                 foreach($item->roles as $role){
 
-                    if($this->checkRole(strtolower($role))){
+                    if(\Guardian::hasRole(strtolower($role))){
                         $hasRole = true;
                         break;
                     }
@@ -565,23 +565,5 @@ class MenuBuilder implements Countable
         $menu .= $presenter->getCloseTagWrapper();
 
         return $menu;
-    }
-
-    protected function checkRole($role)
-    {
-        if(in_array($role,$this->cleanRoles())){
-            return true;
-        }else {
-            return false;
-        }
-    }
-    private function cleanRoles()
-    {
-        $roles = $this->userRepo->getRoles();
-        $cleanRoles = [];
-        foreach($roles as $key => $value){
-            array_push($cleanRoles, $value->name);
-        }
-        return $cleanRoles;
     }
 }
