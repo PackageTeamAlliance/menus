@@ -87,17 +87,19 @@ abstract class Presenter implements PresenterInterface
     public function getChildMenuItems(MenuItem $item)
     {
         $results = '';
-        foreach ($item->getChilds() as $child) {
+        $children = $item->getChilds();
+        foreach ($children as $child) {
+
             $hasRole = false;
 
             if(!isset($child->roles)){
                 $child->roles = ['guest'];
             }
 
-            if($item->roles[0] == "guest"){
+            if(in_array("guest", $child->roles)){
                 $hasRole = true;
             }else {
-                foreach($item->roles as $role){
+                foreach($child->roles as $role){
 
                     if(\Guardian::hasRole(strtolower($role))){
                         $hasRole = true;
@@ -107,7 +109,9 @@ abstract class Presenter implements PresenterInterface
             }
 
             if($hasRole){
+
                 if ($child->hasSubMenu()) {
+
                     $results .= $this->getMultiLevelDropdownWrapper($child);
                 } elseif ($child->isHeader()) {
                     $results .= $this->getHeaderWrapper($child);

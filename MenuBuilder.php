@@ -76,9 +76,6 @@ class MenuBuilder implements Countable
     {
         $this->menu = $menu;
         $this->config = $config;
-        $this->userRepo = app()->make('Pta\Guardian\Repositories\UserRepository');
-
-
     }
 
     /**
@@ -534,7 +531,7 @@ class MenuBuilder implements Countable
                 $item->roles = ['guest'];
             }
 
-            if($item->roles[0] == "guest"){
+            if(in_array("guest", $item->roles)){
                 $hasRole = true;
             }else {
                 foreach($item->roles as $role){
